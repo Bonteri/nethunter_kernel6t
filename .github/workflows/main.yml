@@ -5,8 +5,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: 1. Extraer Código Fuente
+    - name: 1. Extraer Código Fuente y Submódulos
       uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
 
     - name: 2. Preparar Entorno de Compilación (Clang)
       run: |
@@ -22,8 +24,8 @@ jobs:
         export CROSS_COMPILE=aarch64-linux-gnu-
         export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
         export CC=clang
-        CONFIG_FILE=$(ls arch/arm64/configs/ | grep -E 'fajita|sdm845' | head -n 1)
-        make O=out $CONFIG_FILE
+        # Apuntando directamente al mapa maestro que descubriste
+        make O=out nethunter_defconfig
         make O=out -j$(nproc)
 
     - name: 4. Empaquetar Ojiva (AnyKernel3)
