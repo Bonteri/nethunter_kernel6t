@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - name: 1. Extraer Código Fuente y Submódulos
       uses: actions/checkout@v4
@@ -13,7 +13,7 @@ jobs:
     - name: 2. Preparar Entorno de Compilación (Clang)
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential bc gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev
+        sudo apt-get install -y build-essential bc gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev zip
         git clone --depth=1 https://github.com/kdrag0n/proton-clang.git clang
 
     - name: 3. Compilar Núcleo Táctico
